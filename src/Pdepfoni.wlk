@@ -3,7 +3,7 @@ class Linea{
 	
 	const numeroDeTelefono 
 	
-	const consumos = []
+	const property consumos = []
 	
 	const packsDeLaLinea =[]
 	
@@ -13,6 +13,15 @@ class Linea{
 	
 	method agregarConsumo(consumo) = consumos.add(consumo)
 	
+	method consumosEntre(fechaInicial,fechaFinal) = consumos.filter({consumo => consumo.fechaConsumo().between(fechaInicial,fechaFinal)})
+	
+	method costoTotalConsumo(fechaInicial,fechaFinal) = self.consumosEntre(fechaInicial,fechaFinal).sum({consumo => consumo.costoConsumo()}) 
+	
+	method conocerPromedioConsumos(fechaInicial,fechaFinal) = self.costoTotalConsumo(fechaInicial,fechaFinal) / self.consumosEntre(fechaInicial,fechaFinal).size()
+	
+	method ultimos30dias(fecha) = fecha.minusDays(30)
+	
+	method costoTotalUltimos30dias() = self.costoTotalConsumo(self.ultimos30dias(fechaDeHoy),fechaDeHoy) 
 }
 
 class Pack{

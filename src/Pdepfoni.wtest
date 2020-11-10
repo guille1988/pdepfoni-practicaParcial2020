@@ -10,10 +10,29 @@ describe "Test´s punto 1"{
 	assert.equals(0.5,consumoRandom.costoConsumo())
 	}
 }
-/*
+
 describe "Test´s punto 2"{
+	
+	const diaColgado = new Date(day = 9, month = 10, year = 2020)
+	const dia1 = new Date(day = 1, month = 11, year = 2020)
+	const dia2 = new Date(day = 2, month = 11, year = 2020)
+	const dia3 = new Date(day = 3, month = 11, year = 2020)
+	const dia4 = new Date(day = 4, month = 11, year = 2020)
+	const consumo1 = new ConsumoMB(fechaConsumo = dia1, precioPorMega = 0.1, megasConsumidos = 5)
+	const consumo2 = new ConsumoMB(fechaConsumo = dia2, precioPorMega = 0.1, megasConsumidos = 7)
+	const consumo3 = new ConsumoMB(fechaConsumo = dia3, precioPorMega = 0.1, megasConsumidos = 2)
+	const consumo4 = new ConsumoMB(fechaConsumo = dia4, precioPorMega = 0.1, megasConsumidos = 10)
+	const consumoColgado = new ConsumoMB(fechaConsumo = diaColgado, precioPorMega = 0.1, megasConsumidos = 11)
+	const linea = new Linea(numeroDeTelefono = 1126303154, consumos = [consumoColgado,consumo1,consumo2,consumo3,consumo4])
+	
+	test "El costo promedio de todos los consumos entre el 9/10 y 4/11 es 0.7"{
+		assert.equals(0.7,linea.conocerPromedioConsumos(diaColgado,dia4))
+	}
+	
+	test "El costo total de los ultimos 30 dias es 0.24"{
+		assert.equals(2.4,linea.costoTotalUltimos30dias())
+	}
 	
 }
 
  
-*/	
