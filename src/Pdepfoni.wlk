@@ -1,5 +1,7 @@
 class Linea{
-	var numeroDeTelefono 
+	const property fechaDeHoy = new Date()
+	
+	const numeroDeTelefono 
 	
 	const packsDeLaLinea =[]
 	
@@ -9,7 +11,9 @@ class Linea{
 }
 
 class Pack{
-	const property hoy = new Date()
+	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
+	
+	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
 }
 
 class PackDeCreditoDisponible inherits Pack{
@@ -27,7 +31,13 @@ class PackLlamadasGratis inherits Pack{
 
 class PackInternetGratisLosFinde inherits Pack{
 	
-	method hayInternetGratisHoy() = hoy.dayOfWeek() == sunday or hoy.dayOfWeek() == saturday
+	var hayInternetGratis = false
+	
+	method internetGratis(linea) {
+		if (linea.fechaDeHoy().equals(sunday) or linea.fechaDeHoy().equals(saturday)){
+			hayInternetGratis = true
+		}
+	}
 	
 }
 
