@@ -1,7 +1,5 @@
 class Linea{
-	var numeroDeTelefono
-	
-	const consumo 
+	var numeroDeTelefono 
 	
 	const packsDeLaLinea =[]
 	
@@ -11,35 +9,26 @@ class Linea{
 }
 
 class Pack{
-	var fechaDeVencimiento = new Date()	
+	const property hoy = new Date()
+}
+
+class PackDeCreditoDisponible inherits Pack{
+	var credito = 500
 	
+}
+
+class PackDeMBdisponibles inherits Pack{
+	var megasDisponible = 1000
+}
+
+class PackLlamadasGratis inherits Pack{
+	var llamadasGratis = true
+}
+
+class PackInternetGratisLosFinde inherits Pack{
 	
-}
-
-class LlamadasGratis inherits Pack{
-	var property llamadasGratis = true
-}
-
-class InternetIlimitado inherits Pack{
-	var property internetIlimitado = true
-}
-
-class PackDeCredito inherits LlamadasGratis{
-	var precioPorSegundo = 0.05
-	var precioFijo = 1
-	var property creditoDisponible
-	override method llamadasGratis() {
-		self.llamadasGratis(false)
-	}
-}
-
-class NavegarInternet inherits InternetIlimitado{
-	var cantidadDeMegas = 5
-	var precioPorMegas = 0.10
-	var property megasParaNavegar
-	override method internetIlimitado() {
-		self.internetIlimitado(false)
-	}
+	method hayInternetGratisHoy() = hoy.dayOfWeek() == sunday or hoy.dayOfWeek() == saturday
+	
 }
 
 
