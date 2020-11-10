@@ -3,17 +3,23 @@ class Linea{
 	
 	const numeroDeTelefono 
 	
+	const consumos = []
+	
 	const packsDeLaLinea =[]
 	
 	method agregarPack(pack) {
 		packsDeLaLinea.add(pack)
 	}
+	
+	method agregarConsumo(consumo) = consumos.add(consumo)
 }
 
 class Pack{
 	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
 	
 	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
+	
+	
 }
 
 class PackDeCreditoDisponible inherits Pack{
@@ -40,6 +46,35 @@ class PackInternetGratisLosFinde inherits Pack{
 	}
 	
 }
+
+class Consumo{
+	
+var property fechaConsumo = new Date()	
+
+}
+
+class ConsumoMB inherits Consumo{
+	
+	const precioPorMega
+	
+	var property megasConsumidos
+	
+	method costoConsumo() = megasConsumidos * precioPorMega
+}
+
+class ConsumoDeLlamadas inherits Consumo{
+	
+	const precioFijo
+	
+	const precioPorSegundo
+	
+	var property tiempoDeLlamada
+	
+	method costoConsumo() = precioFijo + (tiempoDeLlamada - 30) * precioPorSegundo
+	
+}
+
+
 
 
 
