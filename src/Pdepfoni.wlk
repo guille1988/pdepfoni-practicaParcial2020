@@ -17,14 +17,11 @@ class Linea{
 class Pack{
 	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
 	
-	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
-	
-	
+	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()	
 }
 
 class PackDeCreditoDisponible inherits Pack{
 	var credito = 500
-	
 }
 
 class PackDeMBdisponibles inherits Pack{
@@ -44,13 +41,11 @@ class PackInternetGratisLosFinde inherits Pack{
 			hayInternetGratis = true
 		}
 	}
-	
 }
 
 class Consumo{
 	
 var property fechaConsumo = new Date()	
-
 }
 
 class ConsumoMB inherits Consumo{
@@ -71,7 +66,6 @@ class ConsumoDeLlamadas inherits Consumo{
 	var property tiempoDeLlamada
 	
 	method costoConsumo() = precioFijo + (tiempoDeLlamada - 30) * precioPorSegundo
-	
 }
 
 
