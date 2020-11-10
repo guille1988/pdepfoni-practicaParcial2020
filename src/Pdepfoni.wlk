@@ -12,6 +12,7 @@ class Linea{
 	}
 	
 	method agregarConsumo(consumo) = consumos.add(consumo)
+	
 }
 
 class Pack{
@@ -45,7 +46,7 @@ class PackInternetGratisLosFinde inherits Pack{
 
 class Consumo{
 	
-var property fechaConsumo = new Date()	
+var property fechaConsumo 
 }
 
 class ConsumoMB inherits Consumo{
