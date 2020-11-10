@@ -1,0 +1,14 @@
+import Pdepfoni.*
+
+
+describe "Test´s punto 1"{
+	test "El costo de un consumo de 5 MB es $0.50" {
+		
+	const fecha = new Date(day = 1, month = 11, year = 2020)
+	const consumoRandom = new ConsumoMB(fechaConsumo = fecha, precioPorMega = 0.1, megasConsumidos = 5)
+		
+	assert.equals(0.5,consumoRandom.costoConsumo())
+	}
+}
+ 
+	
