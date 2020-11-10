@@ -25,21 +25,65 @@ class Linea{
 }
 
 class Pack{
+	var property satisfaceConsumoDeInternet = true
+	
+	var property satisfaceConsumoDeLlamadas = true
+	
 	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
 	
-	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()	
+	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
+	
+	method puedeSatisfacerConsumo(consumo)	
 }
 
 class PackDeCreditoDisponible inherits Pack{
+	
 	var credito = 500
+	
+	override method puedeSatisfacerConsumo(consumo){
+		if(consumo.puedeConsumirDePack(self)){
+			credito > consumo.costoConsumo()
+		}
+		else(
+			self.error("No son compatibles el pack con el consumo")
+		)
+	}
 }
 
 class PackDeMBdisponibles inherits Pack{
-	var megasDisponible = 1000
+	var megasDisponible = 1000	
+	
+	override method satisfaceConsumoDeLlamadas(){
+		self.satisfaceConsumoDeLlamadas(false)
+	}
+	
+	override method puedeSatisfacerConsumo(consumo){
+		if(consumo.puedeConsumirDePack(self)){
+			megasDisponible > consumo.megasConsumidos()
+		}
+		else(
+			self.error("No son compatibles el pack con el consumo")
+		)
+	}
+	
 }
 
 class PackLlamadasGratis inherits Pack{
 	var llamadasGratis = true
+	
+	override method satisfaceConsumoDeLlamadas(){
+		self.satisfaceConsumoDeInternet(false)
+	}
+	
+	override method puedeSatisfacerConsumo(consumo){
+		if(consumo.puedeConsumirDePack(self)){
+			true
+		}
+		else(
+			self.error("No son compatibles el pack con el consumo")
+		)
+	}
+	
 }
 
 class PackInternetGratisLosFinde inherits Pack{
@@ -51,11 +95,16 @@ class PackInternetGratisLosFinde inherits Pack{
 			hayInternetGratis = true
 		}
 	}
+	override method satisfaceConsumoDeLlamadas(){
+		self.satisfaceConsumoDeLlamadas(false)
+	}
 }
-
-class Consumo{
 	
+class Consumo{
+		
 var property fechaConsumo 
+
+
 }
 
 class ConsumoMB inherits Consumo{
@@ -65,6 +114,10 @@ class ConsumoMB inherits Consumo{
 	var property megasConsumidos
 	
 	method costoConsumo() = megasConsumidos * precioPorMega
+	
+	method puedeConsumirDe(pack) = pack.satisfaceConsumoDeInternet()
+	
+
 }
 
 class ConsumoDeLlamadas inherits Consumo{
@@ -76,7 +129,10 @@ class ConsumoDeLlamadas inherits Consumo{
 	var property tiempoDeLlamada
 	
 	method costoConsumo() = precioFijo + (tiempoDeLlamada - 30) * precioPorSegundo
+	
+	method puedeConsumirDe(pack) = pack.satisfaceConsumoDeLlamadas()
 }
+
 
 
 
