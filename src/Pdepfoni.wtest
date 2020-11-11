@@ -51,4 +51,25 @@ describe "Test´s punto 3"{
 	
 }
 
+describe "Test´s punto 5"{
+	
+	const dia1 = new Date(day = 9, month = 11, year = 2020)
+	const dia2 = new Date(day = 30, month = 11, year = 2020)
+	const dia3 = new Date(day = 13, month = 10, year = 2020)
+	const dia4 = new Date(day = 12, month = 12, year = 2020)
+	
+	const packMBlibres = new PackDeMBdisponibles(megasDisponible = 10,fechaVencimiento = dia2)
+	const packCredito = new PackDeCreditoDisponible(credito = 50,fechaVencimiento = dia2)
+	const packMBlibresVencidos = new PackDeMBdisponibles(megasDisponible = 5,fechaVencimiento = dia3)
+	const packMBlibres2 = new PackDeMBdisponibles(megasDisponible = 15,fechaVencimiento = dia4)
+	const consumo = new ConsumoMB(fechaConsumo = dia1, precioPorMega = 0.1, megasConsumidos = 20)
+
+	const linea = new Linea(numeroDeTelefono = 1566666666, packsDeLaLinea = [packMBlibres,packCredito,packMBlibresVencidos,packMBlibres2])
+	
+	
+	test "Esta linea no puede hacer consumo, porque ningun pack satisface completamente su consumo"{
+		assert.notThat(linea. puedeHacerCierto(consumo))
+	}
+}
+
  

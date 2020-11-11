@@ -22,6 +22,11 @@ class Linea{
 	method ultimos30dias(fecha) = fecha.minusDays(30)
 	
 	method costoTotalUltimos30dias() = self.costoTotalConsumo(self.ultimos30dias(fechaDeHoy),fechaDeHoy) 
+	
+	method filtrarPacksVencidos() = packsDeLaLinea.filter({pack => pack.packVencido(self)})
+	
+	method puedeHacerCierto(consumo) = self.filtrarPacksVencidos().any({pack => consumo.puedeSatisfacerConsumo(pack)})
+		
 }
 
 class Pack{
@@ -34,9 +39,7 @@ class Pack{
 	
 	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
 	
-	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
-	
-	
+	method packVencido(linea) = self.fechaVencimiento() <= linea.fechaDeHoy()
 }
 
 class PackDeCreditoDisponible inherits Pack{
