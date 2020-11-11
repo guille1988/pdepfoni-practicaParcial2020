@@ -25,86 +25,69 @@ class Linea{
 }
 
 class Pack{
-	var property satisfaceConsumoDeInternet = true
 	
-	var property satisfaceConsumoDeLlamadas = true
+	var  property esPackDeInternet = true
+	
+	var  property esPackDeLlamadas = true
+	
+	var property esPackMixto = true
 	
 	const property fechaVencimiento = new Date(day = 23, month = 11, year = 2020)
 	
 	method estaVencidoElPackDeLa(linea) = self.fechaVencimiento() > linea.fechaDeHoy()
 	
-	method puedeSatisfacerConsumo(consumo)	
+	
 }
 
 class PackDeCreditoDisponible inherits Pack{
 	
-	var credito = 500
-	
-	override method puedeSatisfacerConsumo(consumo){
-		if(consumo.puedeConsumirDePack(self)){
-			credito > consumo.costoConsumo()
-		}
-		else(
-			self.error("No son compatibles el pack con el consumo")
-		)
-	}
+	var property credito = 500
 }
 
 class PackDeMBdisponibles inherits Pack{
-	var megasDisponible = 1000	
 	
-	override method satisfaceConsumoDeLlamadas(){
-		self.satisfaceConsumoDeLlamadas(false)
-	}
+	var property hayInternetGratis = false
 	
-	override method puedeSatisfacerConsumo(consumo){
-		if(consumo.puedeConsumirDePack(self)){
-			megasDisponible > consumo.megasConsumidos()
-		}
-		else(
-			self.error("No son compatibles el pack con el consumo")
-		)
-	}
+	var property megasDisponible = 1000	
+	
+	override method esPackDeLlamadas() = false
+	
+	override method  esPackMixto() = false
 	
 }
 
 class PackLlamadasGratis inherits Pack{
-	var llamadasGratis = true
+	var property llamadasGratis = true	
 	
-	override method satisfaceConsumoDeLlamadas(){
-		self.satisfaceConsumoDeInternet(false)
-	}
+	override method esPackDeInternet() = false
 	
-	override method puedeSatisfacerConsumo(consumo){
-		if(consumo.puedeConsumirDePack(self)){
-			true
-		}
-		else(
-			self.error("No son compatibles el pack con el consumo")
-		)
-	}
-	
+	override method  esPackMixto() = false
 }
 
-class PackInternetGratisLosFinde inherits Pack{
-	
-	var hayInternetGratis = false
+class PackInternetGratisLosFinde inherits PackDeMBdisponibles{
 	
 	method internetGratis(linea) {
 		if (linea.fechaDeHoy().equals(sunday) or linea.fechaDeHoy().equals(saturday)){
 			hayInternetGratis = true
+			self.megasDisponible(9999999999999999999999999999999999)
 		}
-	}
-	override method satisfaceConsumoDeLlamadas(){
-		self.satisfaceConsumoDeLlamadas(false)
+		else(
+			self.megasDisponible(0)
+		)
 	}
 }
 	
 class Consumo{
 		
-var property fechaConsumo 
+	var property fechaConsumo 
+	
+	method costoConsumo()
+	
+	method creditoMayorAconsumo(pack) = pack.credito() > self.costoConsumo()
 
-
+	method puedeSatisfacerConsumo(pack)
+	
+	method esPackMixtoYcreditoMayorAconsumo(pack) = pack.esPackMixto() and self.creditoMayorAconsumo(pack)
 }
 
 class ConsumoMB inherits Consumo{
@@ -113,11 +96,12 @@ class ConsumoMB inherits Consumo{
 	
 	var property megasConsumidos
 	
-	method costoConsumo() = megasConsumidos * precioPorMega
+	override method costoConsumo() = megasConsumidos * precioPorMega
 	
-	method puedeConsumirDe(pack) = pack.satisfaceConsumoDeInternet()
-	
+	method megasPackMayorAconsumo(pack) = pack.megasDisponible() > self.megasConsumidos()
 
+	override method puedeSatisfacerConsumo(pack) = self.esPackMixtoYcreditoMayorAconsumo(pack) or pack.hayInternetGratis() or (pack.esPackDeInternet() and self.megasPackMayorAconsumo(pack))
+	
 }
 
 class ConsumoDeLlamadas inherits Consumo{
@@ -128,9 +112,10 @@ class ConsumoDeLlamadas inherits Consumo{
 	
 	var property tiempoDeLlamada
 	
-	method costoConsumo() = precioFijo + (tiempoDeLlamada - 30) * precioPorSegundo
+	override method costoConsumo() = precioFijo + (tiempoDeLlamada - 30) * precioPorSegundo
 	
-	method puedeConsumirDe(pack) = pack.satisfaceConsumoDeLlamadas()
+	override method puedeSatisfacerConsumo(pack) = self.esPackMixtoYcreditoMayorAconsumo(pack) or (pack.esPackDeLlamadas() and self.creditoMayorAconsumo(pack))
+	
 }
 
 

@@ -35,4 +35,20 @@ describe "Test´s punto 2"{
 	
 }
 
+describe "Test´s punto 3"{
+	
+	const packMBlibres = new PackDeMBdisponibles(megasDisponible = 100)
+	const consumoInternet = new ConsumoMB(megasConsumidos = 5, precioPorMega = 0.1, fechaConsumo = new Date())
+	const consumoLlamada = new ConsumoDeLlamadas(precioFijo = 1, precioPorSegundo = 0.05, tiempoDeLlamada = 60, fechaConsumo = new Date())
+	
+	test "Un pack de 100 mb satisface un consumo de 5mb"{
+		assert.that(consumoInternet.puedeSatisfacerConsumo(packMBlibres))
+	}
+	
+	test "Un pack de 100 mb no satisface una llamada de 60 segundos"{
+		assert.notThat(consumoLlamada.puedeSatisfacerConsumo(packMBlibres))
+	}
+	
+}
+
  
